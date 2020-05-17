@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { createVerify } from 'crypto'
 import { serialize as phpSerialize } from 'php-serialize'
 
 export function verify(publicKey: string, postBody: { [key: string]: any }): boolean {
-  const { p_signature, ...postBodyRest } = postBody
+  const { p_signature: signature, ...postBodyRest } = postBody || {}
 
-  if (!p_signature || typeof p_signature !== 'string') {
+  if (!publicKey || !signature || typeof signature !== 'string') {
     return false
   }
 
-  const signature = Buffer.from(p_signature, 'base64')
   const serializedPostBody = serialize(sortByKey(postBodyRest))
 
   const verifier = createVerify('sha1')
   verifier.update(serializedPostBody)
   verifier.end()
 
-  return verifier.verify(publicKey, signature)
+  return verifier.verify(publicKey, signature, 'base64')
 }
 
 function sortByKey(object: { [key: string]: any }) {

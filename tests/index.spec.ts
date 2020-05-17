@@ -55,6 +55,17 @@ describe('paddle-webhook-verification', () => {
     expect(verify(publicKey, postBodyParsed)).toEqual(true)
   })
 
+  it('rejects for empty parameters', () => {
+    // @ts-expect-error
+    expect(verify(null, null)).toEqual(false)
+
+    // @ts-expect-error
+    expect(verify(publicKey, null)).toEqual(false)
+
+    // @ts-expect-error
+    expect(verify(null, postBody)).toEqual(false)
+  })
+
   it('rejects for empty body', () => {
     expect(verify(publicKey, {})).toEqual(false)
   })
@@ -73,5 +84,14 @@ describe('paddle-webhook-verification', () => {
 
   it('rejects for invalid signature', () => {
     expect(verify(publicKey, { ...postBody, p_signature: 'FooBar' })).toEqual(false)
+  })
+
+  it('rejects for malformed public key', () => {
+    function replaceCharacterAt(string: string, index: number, replace: string) {
+      return string.substring(0, index) + replace + string.substring(index + 1)
+    }
+
+    const malformedPublicKey = replaceCharacterAt(publicKey, 165, 'A')
+    expect(verify(malformedPublicKey, postBody)).toEqual(false)
   })
 })

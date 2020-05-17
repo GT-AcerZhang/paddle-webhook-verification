@@ -1,7 +1,7 @@
 {
   "name": "@devoxa/paddle-webhook-verification",
   "description": "Verifies the signature of webhook requests from Paddle.com",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/src/index.js",
   "license": "MIT",
   "repository": {

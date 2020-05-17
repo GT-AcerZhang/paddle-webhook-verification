@@ -28,5 +28,8 @@
   },
   "dependencies": {
     "php-serialize": "^4.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

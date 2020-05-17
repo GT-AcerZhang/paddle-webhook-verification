@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { verify } from '../src/index'
 
 const publicKey = `-----BEGIN PUBLIC KEY-----
@@ -47,7 +48,7 @@ describe('paddle-webhook-verification', () => {
   })
 
   it('verifies valid signature for pre-parsed body', () => {
-    let postBodyParsed: any = postBody
+    const postBodyParsed: any = postBody
     postBodyParsed.linked_subscriptions = [7, 4, 5]
     postBodyParsed.subscription_plan_id = 3
 

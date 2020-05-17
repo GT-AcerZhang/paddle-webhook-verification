@@ -5,10 +5,11 @@
 
 <!-- Description -->
 <h4 align="center"> 
-  Verifies the signature of webhook requests from [Paddle](https://paddle.com/).
+  Verifies the signature of webhook requests from <a href="https://paddle.com">Paddle</a>.
 </h4>
 <p align="center">
-  This is the example code from [the Paddle documentation](https://paddle.com/docs/reference-verifying-webhooks/), but cleaned up with types & tests.
+  This is the example code from <a href="https://paddle.com/docs/reference-verifying-webhooks/">the Paddle documentation</a>,
+  but cleaned up with types & tests.
 </p>
 
 <!-- Badges -->
@@ -68,6 +69,20 @@ const postBody = {
 
 const isVerified = verify(publicKey, postBody)
 ```
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors)
+specification. Contributions of any kind welcome!
 
 ## License
 

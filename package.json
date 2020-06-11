@@ -15,7 +15,9 @@
     "build": "rm -rf dist/ && tsc",
     "preversion": "yarn build"
   },
+  "prettier": "@devoxa/prettier-config",
   "devDependencies": {
+    "@devoxa/prettier-config": "^1.0.0",
     "@types/jest": "^25.2.2",
     "@types/node": "^14.0.1",
     "@typescript-eslint/eslint-plugin": "^2.33.0",

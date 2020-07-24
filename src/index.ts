@@ -1,12 +1,13 @@
 import { createVerify } from 'crypto'
 import { serialize as phpSerialize } from 'php-serialize'
+import { PaddleEvent } from './interfaces'
 
-export function verify(publicKey: string, postBody: { [key: string]: any }): boolean {
+export * from './interfaces'
+
+export function verify(publicKey: string, postBody: any): postBody is PaddleEvent {
+  if (typeof postBody !== 'object') return false
   const { p_signature: signature, ...postBodyRest } = postBody || {}
-
-  if (!publicKey || !signature || typeof signature !== 'string') {
-    return false
-  }
+  if (!publicKey || !signature || typeof signature !== 'string') return false
 
   const serializedPostBody = serialize(sortByKey(postBodyRest))
 

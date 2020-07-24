@@ -54,6 +54,8 @@ yarn add @devoxa/paddle-webhook-verification
 
 ## Usage
 
+You can use this module as just a verification function for your post body:
+
 ```ts
 import { verify } from '@devoxa/paddle-webhook-verification'
 
@@ -69,6 +71,24 @@ const postBody = {
 
 const isVerified = verify(publicKey, postBody)
 ```
+
+You can also use it as a type guard:
+
+```ts
+if (verify(publicKey, postBody)) {
+  switch (postBody.alert_name) {
+    case 'subscription_created':
+      // postBody is typed as PaddleSubscriptionCreatedEvent
+      break
+  }
+} else {
+  throw new Error('Failed verification of post body')
+}
+```
+
+:warning: To discriminate the returned union based on `alert_name`, you have to use a `switch`
+statement. `if` statements will not work until
+[this PR](https://github.com/microsoft/TypeScript/pull/38311) has been merged into TypeScript.
 
 ## Contributors
 

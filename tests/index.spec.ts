@@ -40,11 +40,24 @@ const postBody = {
   user_id: '3',
   p_signature:
     'avXxYVv9gQxEIaQv3e/T22+tL2JJsyGpfQCyl5whYneT3laF9BB0j7DU3nhYB7VFfG5g/LsQqs94rsiMqPG4cBPDndVe7r0JQ7MIILj2FLMUE7aL2bjEkmbDfHW08mHo8GobFcYTzugLhA7kv1tlPos04ezcgPv3f6LN+sUATnmIpR+M5/GsRK4UqFoQEtXbsNcgrS6/kk58CugJ75/oZOaYwyB6iIDxr7z8oq3/5BVap5r6mlH9VnmMz4xNAAbOIJ9/depsEcAAXKADPd8b4NDTeal85o0t+38s4X98PJ4STSYwMp9LIps6fOWRlJUh/sCESKiG0HaNJUMFosdtQhpqKRK2DsLbND0GxvtpID2BKcJwDC++LNd3/pomFCAgMdN3s4KVLQk0vs+nGfVV4tIsI0iJKjev/NnFlp8iihx0r+bcCN024c2lVDtoBjY/StmE+KVyfuKAftsIGr8C8Hq8Q69SeBpmJU4TFi12WsKHjt+MvYw46mF2t0gLSaZkK57RFYs2FPyWu+0TESmbmbmfx8lfyA+eDGDr3D+dgdN621uyZuzc3keSB6rdmWOJXDPQslUB6k6ElxL9QnYnt5lf2pYbU1MCBwz5G6jSB2KHxiNVnK0NHu/7m9fBQdl51AtQ+OCF/4DbG2AlNXx33gYaPWgCN18g3EyU9o430N0=',
-}
+} as any
 
 describe('paddle-webhook-verification', () => {
   it('verifies valid signature', () => {
     expect(verify(publicKey, postBody)).toEqual(true)
+  })
+
+  it('acts as a type guard', () => {
+    if (verify(publicKey, postBody)) {
+      switch (postBody.alert_name) {
+        case 'subscription_payment_succeeded':
+          return postBody.balance_tax.toLowerCase()
+
+        default:
+          // @ts-expect-error
+          return postBody.balance_tax
+      }
+    }
   })
 
   it('verifies valid signature for pre-parsed body', () => {
@@ -56,14 +69,19 @@ describe('paddle-webhook-verification', () => {
   })
 
   it('rejects for empty parameters', () => {
-    // @ts-expect-error
-    expect(verify(null, null)).toEqual(false)
-
-    // @ts-expect-error
     expect(verify(publicKey, null)).toEqual(false)
+    expect(verify(publicKey, 'FooBarBaz')).toEqual(false)
+    expect(verify(publicKey, 42)).toEqual(false)
+    expect(verify(publicKey, {})).toEqual(false)
+    expect(verify(publicKey, { foo: 'bar' })).toEqual(false)
+    expect(verify(publicKey, [])).toEqual(false)
+    expect(verify(publicKey, ['Foo'])).toEqual(false)
 
     // @ts-expect-error
     expect(verify(null, postBody)).toEqual(false)
+
+    // @ts-expect-error
+    expect(verify(null, null)).toEqual(false)
   })
 
   it('rejects for empty body', () => {

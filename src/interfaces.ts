@@ -6,6 +6,8 @@ export type PaddleEvent =
   | PaddleSubscriptionPaymentFailedEvent
   | PaddleSubscriptionPaymentRefundedEvent
 
+export type PaddleSubscriptionStatus = 'active' | 'trialing' | 'past_due' | 'paused' | 'deleted'
+
 export interface PaddleSubscriptionCreatedEvent {
   alert_id: string
   alert_name: 'subscription_created'
@@ -20,7 +22,7 @@ export interface PaddleSubscriptionCreatedEvent {
   passthrough: string
   quantity: string
   source: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_plan_id: string
   unit_price: string
@@ -46,11 +48,11 @@ export interface PaddleSubscriptionUpdatedEvent {
   old_next_bill_date: string
   old_price: string
   old_quantity: string
-  old_status: string
+  old_status: PaddleSubscriptionStatus
   old_subscription_plan_id: string
   old_unit_price: string
   passthrough: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_plan_id: string
   update_url: string
@@ -70,7 +72,7 @@ export interface PaddleSubscriptionCancelledEvent {
   marketing_consent: string
   passthrough: string
   quantity: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_plan_id: string
   unit_price: string
@@ -108,7 +110,7 @@ export interface PaddleSubscriptionPaymentSucceededEvent {
   quantity: string
   receipt_url: string
   sale_gross: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_payment_id: string
   subscription_plan_id: string
@@ -133,7 +135,7 @@ export interface PaddleSubscriptionPaymentFailedEvent {
   order_id: string
   passthrough: string
   quantity: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_payment_id: string
   subscription_plan_id: string
@@ -167,7 +169,7 @@ export interface PaddleSubscriptionPaymentRefundedEvent {
   quantity: string
   refund_reason: string
   refund_type: string
-  status: string
+  status: PaddleSubscriptionStatus
   subscription_id: string
   subscription_payment_id: string
   subscription_plan_id: string

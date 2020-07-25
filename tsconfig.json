@@ -10,7 +10,6 @@
     "baseUrl": "./",
     "declaration": true,
     "sourceMap": true,
-    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,

@@ -48,6 +48,8 @@
 
 ## Installation
 
+:warning: This package is deprecated, please use [@devoxa/paddle-sdk](https://github.com/devoxa/paddle-sdk) instead.
+
 ```bash
 yarn add @devoxa/paddle-webhook-verification
 ```
